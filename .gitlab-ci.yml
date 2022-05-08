@@ -1,0 +1,89 @@
+image: "rust:latest"
+
+stages: [
+    "Analysis",
+    "Analysis",
+    "Build",
+    "Upload",
+    "Deployment"
+]
+
+Version:
+    stage: "Analysis"
+    script: [ 
+        "rustc -v --version > rustc.version",
+        "cargo --version > cargo.version",
+        "cargo metadata --format-version 1 > .version"
+    ]
+    allow_failure: False
+    dependencies: []
+    cache: { paths: [ "./target" ] } 
+    artifacts:
+        paths:
+            - "rustc.version"
+            - "cargo.version"
+            - ".version"
+    when: "always"
+
+Unit-Test:
+    stage: "Analysis"
+    script: [
+        "cargo test --all-features || true",
+        "cargo test --workspace    || true",
+        "cargo test --release      || true",
+    ]
+    allow_failure: False
+    dependencies: []
+    cache: { paths: [ "./target" ] } 
+    when: "always"
+
+Compile:
+    stage: "Build"
+    environment:
+        name: "Linux"
+        action: "prepare"
+        auto_stop_in: "5 minutes"
+    script: [
+        "cargo build --release | ( printf '%s' ${?} ) || exit ${?}",
+        "mv ./target/release/Parser Parser",
+        "chmod a+x Parser",
+        "cat Cargo.*"
+    ]
+    needs: []
+    cache: { paths: [ "./target" ] } 
+    artifacts:
+        expose_as: "Parser-Artifact-Linux"
+        public: False
+        expire_in: "1 hour"
+        paths: [ "Parser" ]
+    rules: 
+        -   if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+            when: "always"
+            allow_failure: False
+        -   if: $CI_PIPELINE_SOURCE == "push"
+            when: "manual"
+            changes: [ "src/*/**", "Cargo.*" ]
+        -   if: $CI_PIPELINE_SOURCE == "push"
+
+Linux:
+    stage: "Upload"
+    image: "alpine:latest"
+    needs: [ { job: "Compile", artifacts: True } ]
+    cache: []
+    script:
+        - "apk add --no-cache bash curl zip && bash"
+        - "zip Parser.zip Parser"
+        - "export ID=\"${CI_PROJECT_ID}\""
+        - "export API=\"${CI_API_V4_URL}\""
+        - "export TYPE=\"packages/generic\""
+        - "export KEY=\"${CI_JOB_TOKEN}\""
+        - "curl --header \"JOB-TOKEN: ${KEY}\" --upload-file \"Parser.zip\" \
+                \"${API}/projects/${ID}/${TYPE}/Linux/1.0.0/Parser.zip\""
+    artifacts:
+        public: False
+        expire_in: "1 hour"
+        paths: [
+                "*.zip"
+        ]
+    rules:
+        -   if: $CI_PIPELINE_SOURCE == "push"

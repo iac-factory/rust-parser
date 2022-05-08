@@ -1,0 +1,61 @@
+[package]
+name          = "parser"
+edition       = "2018"
+authors       = ["Jacob B. Sanders"]
+version       = "0.0.3"
+readme        = "README.md"
+description   = "..."
+license       = "BSD-3"
+categories    = [
+    "development",
+    "development-tools",
+    "application-management",
+    "command-line-utilities"
+]
+
+autobins      = true
+autoexamples  = false
+autotests     = false
+autobenches   = false
+
+[dependencies]
+clap             = { version = "3.0.0-beta.4", features = ["default", "yaml"] }
+serde            = { version = "*", features = ["derive"] }
+hyper            = { version = "*", default-features = true, features = ["full"] }
+tokio            = { version = "*", features = ["full"] }
+futures          = "*"
+url              = "*"
+hyper-tls        = "*"
+serde_json       = "*" 
+serde_yaml       = "*" 
+yaml-rust        = "*" 
+env_logger       = "*"
+log              = "*"
+colored          = "*"
+
+[badges]
+experimental = { status = "Under Development" }
+
+[profile.dev]
+debug-assertions = true
+debug = true
+opt-level = 0
+panic = "unwind"
+incremental = true
+codegen-units = 512
+
+[profile.release]
+debug-assertions = false
+debug = false
+opt-level = "z"
+panic = "unwind"
+incremental = false
+codegen-units = 64
+rpath = false
+lto = false
+
+[[bin]]
+path = "src/main.rs"
+name = "parser"
+test = true
+bench = true

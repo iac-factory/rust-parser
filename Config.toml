@@ -1,0 +1,32 @@
+[build]
+jobs = 0
+rustc = "rustc"
+rustdoc = "rustdoc"
+target = "triple"
+target-dir = "target"
+incremental = true
+pipelining = true
+all-features = true
+targets = [
+    "x86_64-apple-darwin",
+    "x86_64-pc-windows-msvc",
+    "x86_64-unknown-linux-gnu"
+]
+
+[http]
+debug = true                # HTTP debugging
+ssl-version.max = "tlsv1.3" # Maximum TLS Version
+ssl-version.min = "tlsv1.1" # Minimum TLS Version
+timeout = 30                # Timeout for Each HTTP Request/Second(s)
+low-speed-limit = 10        # Network Threshold (Bytes/Second)
+check-revoke = true         # Check SSL Certificate Revocation
+multiplexing = true         # HTTP/2 Multiplexing
+
+[install]
+root = "/usr/bin"
+
+[term]
+verbose = false        # Verbose Output
+color = "auto"         # Colorize Output
+progress.when = "auto" # Show Progress Bar
+progress.width = 80    #    --> Width
