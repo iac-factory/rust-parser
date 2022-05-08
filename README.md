@@ -1,15 +1,7 @@
-# [Schema Serializer]() #
-
-> *Please see [`LICENSE`](./LICENSE) for more information.*
-
-## Table of Contents ##
-
-[[_TOC_]]
-
 ## Overview ##
 
-`CLI-Parser` is used to create, store, and update environment variable(s) used in both development and deployment
-context. Additionally, through the simplicity of `key = value` variable assignments, `CLI-Parser` can construct
+`parser` is used to create, store, and update environment variable(s) used in both development and deployment
+context. Additionally, through the simplicity of `key = value` variable assignments, `parser` can construct
 a variety of file-types:
 
 - `*.env`
@@ -63,7 +55,7 @@ class Variable:
     Value: str
 ```
 
-Because of key-value serialization capabilities, `CLI-Parser` transforms command-line input into streamable HTTP requests; these requests can then interface distributed key-value systems such as
+Because of key-value serialization capabilities, `parser` transforms command-line input into streamable HTTP requests; these requests can then interface distributed key-value systems such as
 
 - AWS: **Secure Systems Manager**
 - GitLab: **CI-CD**
