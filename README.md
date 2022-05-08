@@ -65,8 +65,6 @@ Because of key-value serialization capabilities, `parser` transforms command-lin
 
 ## Usage ##
 
-For Rust Installation, run the `Install.Bash` script.
-
 In order to generate a new package, open a shell and issue the following:
 
 ```bash
