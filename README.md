@@ -68,15 +68,7 @@ Because of key-value serialization capabilities, `parser` transforms command-lin
 In order to generate a new package, open a shell and issue the following:
 
 ```bash
-cargo +nightly run --bin Parser -- --schema Schema.Yaml --type yaml
-
-# cargo run --bin Serialize
-# cargo run --bin Serialize -- --example "Test" --debug
-
-# --> Nightly
-
-# cargo +nightly run --bin Serialize
-# cargo +nightly run --bin Serialize -- --example "Test" --debug
+cargo run --bin parser -- --help
 ```
 
 ### Cargo ###
