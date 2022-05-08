@@ -19,7 +19,7 @@ autotests     = false
 autobenches   = false
 
 [dependencies]
-clap             = { version = "3.0.0-beta.4", features = ["default", "yaml"] }
+clap             = { version = "3.1.17", features = ["default", "yaml"] }
 serde            = { version = "*", features = ["derive"] }
 hyper            = { version = "*", default-features = true, features = ["full"] }
 tokio            = { version = "*", features = ["full"] }

@@ -14,8 +14,7 @@
 
 use std::env;
 
-use Parser::{Log, YAML, JSON, CLI, GET};
-use Parser::HTTP::{HTTP, HTTPs, Client,};
+use parser::{Log, YAML, JSON, CLI, GET};
 
 fn main() -> Result<(), ()> {
     Log::import();

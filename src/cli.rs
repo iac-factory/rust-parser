@@ -15,7 +15,7 @@ pub const METHOD:   &str    = "HTTP";
 
 pub fn arguments() -> Arguments {
     let method = Argument::new(METHOD)
-        .about("...")
+        .help("...")
         .long("method")
         .short("X".parse().unwrap())
         .case_insensitive(true)
@@ -25,7 +25,7 @@ pub fn arguments() -> Arguments {
         .takes_value(true);
 
     let _type = Argument::new(TYPE)
-        .about("...")
+        .help("...")
         .long("type")
         .short("t".parse().unwrap())
         .case_insensitive(true)
@@ -35,14 +35,14 @@ pub fn arguments() -> Arguments {
         .takes_value(true);
 
     let key = Argument::new(KEY)
-        .about("...")
+        .help("...")
         .long("key")
         .case_insensitive(true)
         .required(true)
         .takes_value(true);
 
     let value = Argument::new(VALUE)
-        .about("...")
+        .help("...")
         .long("value")
         .requires(KEY)
         .required_if_eq(METHOD, "POST")
@@ -52,7 +52,7 @@ pub fn arguments() -> Arguments {
         .name("CLI-Parser")
         .bin_name("CLI-Parser")
         .version(Log::version())
-        .about("GitLab VCS Repository Environment Variable Management")
+        .help("GitLab VCS Repository Environment Variable Management")
             .arg(method).arg(key).arg(value);
 
     return application.get_matches();
